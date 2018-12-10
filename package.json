@@ -1,0 +1,31 @@
+{
+  "name": "blockchain-explorer",
+  "version": "0.0.1",
+  "description": "fabric of blockchain explorer",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/syphchain/blockchain-explorer.git"
+  },
+  "keywords": [
+    "blockchain",
+    "explorer",
+    "fabric"
+  ],
+  "author": "siger",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/syphchain/blockchain-explorer/issues"
+  },
+  "homepage": "https://github.com/syphchain/blockchain-explorer#readme",
+  "dependencies": {
+    "koa": "^2.6.2",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0"
+  }
+}
