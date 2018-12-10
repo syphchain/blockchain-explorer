@@ -15,5 +15,7 @@
 
 实践
 
-- [react + koa2实现论坛](https://segmentfault.com/a/1190000011571857)[github](https://github.com/shiyangzhaoa/call-club)
-- [线上地址](https://shiyangzhaoa.github.io/call-club-web/#/)里面有好多可以借鉴的文章可以看看
+- [react + koa2实现论坛](https://segmentfault.com/a/1190000011571857)
+- [github](https://github.com/shiyangzhaoa/call-club)
+- [线上地址](https://shiyangzhaoa.github.io/call-club-web/#/)
+- [2017，我们来聊聊 Node.js](https://shiyangzhaoa.github.io/call-club-web/#/topics/59e0885bfd515300041ee5a9)
