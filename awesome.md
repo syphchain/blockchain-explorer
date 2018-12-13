@@ -19,6 +19,7 @@
 - [github](https://github.com/shiyangzhaoa/call-club)
 - [线上地址](https://shiyangzhaoa.github.io/call-club-web/#/)
 - [2017，我们来聊聊 Node.js](https://shiyangzhaoa.github.io/call-club-web/#/topics/59e0885bfd515300041ee5a9)
+- [koa2-generator搭建项目](https://www.jianshu.com/p/6b816c609669)
 
 测试
 
