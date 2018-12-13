@@ -1,29 +1,53 @@
-/*
-* entry point in koa
-*/
-// 文件操作模块
-const fs = require('fs');
-// koa核心
-const Koa = require('koa');
-// 静态服务
-const serve = require('koa-static');
-// post请求体处理
-const boyParser = require('koa-bodyparser');
-// 路由处理
-const router = require('koa-router')();
-// server实例化
-const app = new Koa();
-// 加载对应中间件
-app.use(serve(__dirname + '/app/public', { extensions: ['html'] }));
-app.use(boyParser());
-app.use(router.routes());
+const Koa = require('koa')
+const app = new Koa()
+const router = require('koa-router')()
+const views = require('koa-views')
+const json = require('koa-json')
+const onerror = require('koa-onerror')
+const bodyparser = require('koa-bodyparser')
+const logger = require('koa-logger')
 
-// get '/hello'
-router.get('/hello', async (ctx, next) => {
-  ctx.response.body = fs.readFileSync('./app/mock.json', { encoding: 'UTF-8' });
-  await next();
+const url_filter = require('./middlewares/response_formatter')
+const index = require('./routes/index')
+const users = require('./routes/users')
+const api = require('./routes/api')
+
+// error handler
+onerror(app)
+
+// middlewares
+app.use(bodyparser({
+  enableTypes:['json', 'form', 'text']
+}))
+app.use(json())
+app.use(logger())
+app.use(require('koa-static')(__dirname + '/public'))
+
+app.use(views(__dirname + '/views', {
+  extension: 'pug'
+}))
+
+// logger
+app.use(async (ctx, next) => {
+  const start = new Date()
+  await next()
+  const ms = new Date() - start
+  console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
+})
+
+// 添加格式化处理响应中间件,应在路由之前
+app.use(url_filter('^/api'))
+
+// routes
+router.use('/api', api.routes(), api.allowedMethods())
+app.use(index.routes(), index.allowedMethods())
+app.use(users.routes(), users.allowedMethods())
+app.use(api.routes(), api.allowedMethods())
+
+
+// error-handling
+app.on('error', (err, ctx) => {
+  console.error('server error', err, ctx)
 });
 
-app.listen(3000, () => {
-  console.log('server is running in port 3000');
-});
+module.exports = app
