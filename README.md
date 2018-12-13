@@ -15,3 +15,23 @@ Note: 本项目为业余维护和开发的项目，不做强制要求必须参�
 ### 迭代
 
 咱们尝试使用 issue 来管理计划和任务。
+
+### 项目运行基本(需要全局anzhuang)
+
+- node LTS
+- mocha
+
+### 测试
+
+- mocha
+- ava
+
+***由于初次实践nodejs测试框架的原因选择了使用更为广泛的mocha,而ava则是下一代的测试框架,在熟识后再采取ava使用***
+
+#### 测试所需依赖
+
+- mocha
+- chai
+- supertest
+
+#### 测试代码在root/test目录下,以*.test.js形式命名,启动: npm test
