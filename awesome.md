@@ -19,3 +19,10 @@
 - [github](https://github.com/shiyangzhaoa/call-club)
 - [线上地址](https://shiyangzhaoa.github.io/call-club-web/#/)
 - [2017，我们来聊聊 Node.js](https://shiyangzhaoa.github.io/call-club-web/#/topics/59e0885bfd515300041ee5a9)
+
+测试
+
+- [Node.js 单元测试：我要写测试](http://taobaofed.org/blog/2015/12/10/nodejs-unit-tests/)
+- [玩转Node.js单元测试](https://blog.fundebug.com/2017/03/20/nodejs-unit-test/)
+- [node-hero-node-js-unit-testing-tutorial](https://blog.risingstack.com/node-hero-node-js-unit-testing-tutorial/)
+- [testing framework](https://github.com/sindresorhus/awesome-nodejs#testing)
