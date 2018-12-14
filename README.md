@@ -35,3 +35,42 @@ Note: 本项目为业余维护和开发的项目，不做强制要求必须参�
 - supertest
 
 #### 测试代码在root/test目录下,以*.test.js形式命名,启动: npm test
+
+### 关于日志
+
+- 引入log4js
+- 日志文件存放在root/logs下面
+- 现在分三种类型 app, access, errors
+- 使用`let log = require('log4js').getLogger("errors"); log.debug('some log text')`
+
+### 关于swagger接口文档自动生成
+
+- 使用 koa2-swagger-ui 和 swagger-jsdoc
+- 通过对接口处添加yaml格式的注释来让swagger-jsdoc自动获取到接口信息
+- 准备了两个接口,一个是swagger-ui的访问地址ip:port/docs,另一个是swagger-jsdoc获取到的api以json格式返回的的接口'/swagger'两者结合启用
+- 访问ip:port/docs查看文档
+- 接口注释示例:
+```
+/**
+ * @swagger
+ *
+ * /users:
+ *   post:
+ *     description: Creates a user
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: user
+ *         description: User object
+ *         in:  body
+ *         required: true
+ *         type: string
+ *         schema:
+ *           $ref: '#/definitions/NewUser'
+ *     responses:
+ *       200:
+ *         description: users
+ *         schema:
+ *           $ref: '#/definitions/User'
+ */
+```

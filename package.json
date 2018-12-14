@@ -1,5 +1,5 @@
 {
-  "name": "hellokoa",
+  "name": "blockchain-explorer",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -19,7 +19,10 @@
     "koa-router": "^7.1.1",
     "koa-static": "^3.0.0",
     "koa-views": "^5.2.1",
-    "pug": "^2.0.0-rc.1"
+    "koa2-swagger-ui": "^2.11.7",
+    "log4js": "^3.0.6",
+    "pug": "^2.0.0-rc.1",
+    "swagger-jsdoc": "^3.2.6"
   },
   "devDependencies": {
     "chai": "^4.2.0",
