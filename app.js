@@ -8,10 +8,7 @@ const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 // 默认的koa-logger默认设置的拦截打印请求
 const koalogger = require('koa-logger')
-// log4js配置
-const log4js = require('log4js')
-const log4js_config = require('./config/log4js.json')
-log4js.configure(log4js_config)
+
 // 路由处理相关
 const url_filter = require('./middlewares/response_formatter')
 const index = require('./routes/index')
@@ -28,7 +25,8 @@ app.use(koaSwagger({
     url: `http://localhost:${port}/swagger`
   }
 }))
-
+// 执行了一次dbconnect
+// require('./dbs/dbconnect.js')
 // error handler
 onerror(app)
 

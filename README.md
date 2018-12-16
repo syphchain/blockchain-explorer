@@ -74,3 +74,10 @@ Note: 本项目为业余维护和开发的项目，不做强制要求必须参�
  *           $ref: '#/definitions/User'
  */
 ```
+
+### 关于数据库
+
+- 使用mogondb
+- 使用mongoose提供的接口对数据库进行CURD
+- 流程 mongoose connected -> schema -> model -> CURD接口
+- [mongoose操作文档](https://mongoosejs.com/docs/api.html#Model)
