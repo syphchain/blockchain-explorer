@@ -81,3 +81,4 @@ Note: 本项目为业余维护和开发的项目，不做强制要求必须参�
 - 使用mongoose提供的接口对数据库进行CURD
 - 流程 mongoose connected -> schema -> model -> CURD接口
 - [mongoose操作文档](https://mongoosejs.com/docs/api.html#Model)
+- [mongoose典型使用](https://www.cnblogs.com/ostrich-sunshine/p/6755304.html)

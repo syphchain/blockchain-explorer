@@ -13,18 +13,24 @@ exports.getUser = async (ctx, next) => {
 }
 
 exports.registerUser = async (ctx, next) => {
-  userModel.create([
-    {
-      username: 'jason1',
-      password: 333334
-    }
-  ], (err, doc) => {
+  new userModel({
+    username: 'jason1',
+    password: 333334
+  }).save((err, res) => {
     if (err) {
-      log.error(err);
+      console.log('Error' + err);
     } else {
-      log.info(doc);
+      console.log('Res' + res);
     }
+  })
+  /*userModel.create({
+    username: 'jason1',
+    password: 333334
   }).then((doc) => {
+    log.info('sava success');
     log.info(doc);
-  });
+  });*/
+  ctx.body = {
+    num: 1
+  }
 }
