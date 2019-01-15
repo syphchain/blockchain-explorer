@@ -18,10 +18,13 @@ const api = require('./routes/api')
 
 // fabric-sync
 const SyncFabricClient = require('./platform/fabric/FabricClient');
-let client = new SyncFabricClient();
-client.getRegisteredUser('admin', 'Org1', true).then(res => {
+const SyncServices = require('./platform/fabric/sync/SyncServices');
+let sync_client = new SyncFabricClient();
+
+sync_client.getRegisteredUser('admin', 'Org1', true).then(res => {
   logger.debug('register success %s', JSON.stringify(res));
-  client.getChannelInfo();
+  let synServices = new SyncServices(sync_client.client);
+  synServices.getAllBlocks('mychannel');
 }).catch(err => {
   logger.debug('register error %s', err);
 })

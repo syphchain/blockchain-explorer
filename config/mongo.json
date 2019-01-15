@@ -1,5 +1,5 @@
 {
   "host": "localhost",
   "port": "27017",
-  "collection": "userInfo"
+  "collection": "fabric-block"
 }

@@ -13,6 +13,10 @@ class SyncFabricClient {
   constructor () {
     this.client
   }
+  async initialize (userorg) {
+    this.client = await this.getClientForOrg(userorg);
+    return this.client;
+  }
   async getClientForOrg (userorg, username) {
     logger.debug('getClientForOrg - ****** START %s %s', userorg, username);
     let config = '-connection-profile-path';
@@ -72,17 +76,6 @@ class SyncFabricClient {
       logger.error('Failed to get registered user: %s with error: %s', username, error.toString());
       return 'failed '+error.toString();
     }
-  }
-  async getChannelInfo () {
-    setInterval(() => {
-      let channel = this.client.getChannel('mychannel');
-      let channelName = channel.getName();
-      logger.info('channelName -------> \n', channelName, '\n');
-      console.log(channel.getChannelPeers()[1]);
-      channel.queryInfo(channel.getChannelPeers()[1]).then(data => {
-        logger.info('queryInfo ----> \n', JSON.stringify(data));
-      })
-    }, 10000)
   }
 }
 
