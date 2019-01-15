@@ -9,10 +9,14 @@
     "test": "mocha"
   },
   "dependencies": {
+    "asn1.js": "^5.0.1",
+    "convert-hex": "^0.1.0",
     "debug": "^2.6.3",
     "fabric-ca-client": "^1.4.0",
     "fabric-client": "^1.4.0",
     "fs-extra": "^7.0.1",
+    "grpc": "1.14.2",
+    "js-sha256": "^0.9.0",
     "koa": "^2.2.0",
     "koa-bodyparser": "^3.2.0",
     "koa-convert": "^1.2.0",

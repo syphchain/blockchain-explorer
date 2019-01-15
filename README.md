@@ -41,7 +41,7 @@ Note: 本项目为业余维护和开发的项目，不做强制要求必须参�
 - 引入log4js
 - 日志文件存放在root/logs下面
 - 现在分三种类型 app, access, errors
-- 使用`let log = require('log4js').getLogger("errors"); log.debug('some log text')`
+- 使用`let log = require('path/common/log4js').getLogger("errors"); log.debug('some log text')`
 
 ### 关于swagger接口文档自动生成
 
