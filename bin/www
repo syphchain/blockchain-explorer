@@ -3,11 +3,7 @@
 /**
  * Module dependencies.
  */
-// log4js配置
-const log4js = require('log4js');
-const log4js_config = require('../config/log4js.json');
-log4js.configure(log4js_config);
-const log = log4js.getLogger('startup');
+let logger = require('../common/log4js').getLogger('startapp');
 var app = require('../app');
 var debug = require('debug')('demo:server');
 var http = require('http');
@@ -57,7 +53,7 @@ function normalizePort(val) {
  */
 
 function onError(error) {
-  log.error(error);
+  logger.error(error);
   if (error.syscall !== 'listen') {
     throw error;
   }
@@ -90,6 +86,6 @@ function onListening() {
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
-  log.info('Koa server is running on', bind);
+  logger.info('Koa server is running on', bind);
   debug('Listening on ' + bind);
 }
