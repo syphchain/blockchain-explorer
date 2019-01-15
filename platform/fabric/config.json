@@ -1,0 +1,11 @@
+{
+  "channelName": "mychannel",
+  "CC_SRC_PATH": "./artifacts",
+  "eventWaitTime": "30000",
+  "admins":[
+      {
+         "username":"admin",
+         "secret":"adminpw"
+      }
+   ]
+}

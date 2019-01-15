@@ -8,12 +8,23 @@ const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 // 默认的koa-logger默认设置的拦截打印请求
 const koalogger = require('koa-logger')
+const logger = require('./common/log4js').getLogger('app');
 
 // 路由处理相关
 const url_filter = require('./middlewares/response_formatter')
 const index = require('./routes/index')
 const users = require('./routes/users')
 const api = require('./routes/api')
+
+// fabric-sync
+const SyncFabricClient = require('./platform/fabric/FabricClient');
+let client = new SyncFabricClient();
+client.getRegisteredUser('admin', 'Org1', true).then(res => {
+  logger.debug('register success %s', JSON.stringify(res));
+  client.getChannelInfo();
+}).catch(err => {
+  logger.debug('register error %s', err);
+})
 
 // swagger api文档相关
 const port = process.env.port || 3000

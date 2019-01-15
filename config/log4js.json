@@ -1,5 +1,9 @@
 {
   "appenders": {
+    "console": {
+      "type": "console",
+      "category": "console"
+    },
     "access": {
       "type": "dateFile",
       "filename": "logs/access.log",
@@ -7,7 +11,7 @@
       "category": "http"
     },
     "app": {
-      "type": "file",
+      "type": "console",
       "filename": "logs/app.log",
       "maxLogSize": 10485760,
       "numBackups": 3
@@ -22,8 +26,10 @@
       "appender": "errorFile"
     }
   },
+  "replaceConsole": true,
   "categories": {
     "default": { "appenders": [ "app", "errors" ], "level": "DEBUG" },
-    "http": { "appenders": [ "access"], "level": "DEBUG" }
+    "http": { "appenders": [ "access" ], "level": "DEBUG" },
+    "console": { "appenders": [ "console" ], "level": "DEBUG" }
   }
 }
