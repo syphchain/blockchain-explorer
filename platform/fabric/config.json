@@ -1,7 +1,9 @@
 {
   "channelName": "mychannel",
+  "peerName": "peer0.org1.example.com",
   "CC_SRC_PATH": "./artifacts",
   "eventWaitTime": "30000",
+  "blocksSyncTime": "60000",
   "admins":[
       {
          "username":"admin",
