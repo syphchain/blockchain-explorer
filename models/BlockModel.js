@@ -1,8 +1,8 @@
 const mongoose = require('../dbs/dbconnect.js');
 let blockSchema = new mongoose.Schema({
   blocknum: { type: Number },
+  datahash: { type: String },
   prehash: { type: String },
-  time: { type: Date },
   txcount: { type: Number },
   createdt: { type: Date },
   blockhash: { type: String }

@@ -23,7 +23,7 @@ async function getClientForOrg (userorg, username) {
   // 返回client实例
   return client;
 }
-async function getRegisteredUser (username, userorg, isJson) {
+async function getRegisteredUser (username, userorg) {
   try {
     let client = await getClientForOrg(userorg);
     var admins = hfc.getConfigSetting('admins');
@@ -49,17 +49,10 @@ async function getRegisteredUser (username, userorg, isJson) {
       logger.debug('Successfully got the secret for user %s',username);
       user = await client.setUserContext({username:username, password:secret});
       logger.debug('Successfully enrolled username %s  and setUserContext on the client object', username);
-    }
+    } 
     if(user && user.isEnrolled) {
-      if (isJson && isJson === true) {
-        var response = {
-          success: true,
-          secret: user._enrollmentSecret,
-          message: username + ' enrolled Successfully',
-        };
-        // 返回client实例
-        return client;
-      }
+      // 返回client实例
+      return client;
     } else {
       throw new Error('User was not enrolled ');
     }
@@ -69,5 +62,11 @@ async function getRegisteredUser (username, userorg, isJson) {
   }
 }
 
+async function createdFabricClient (username, userorg) {
+  let client = await getRegisteredUser(username, userorg);
+  return client;
+}
+
+exports.createdFabricClient = createdFabricClient;
 exports.getClientForOrg = getClientForOrg;
 exports.getRegisteredUser = getRegisteredUser;
