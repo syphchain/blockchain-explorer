@@ -4,7 +4,6 @@ const convertHex = require('convert-hex');
 const grpc = require('grpc');
 const path = require('path');
 const legalClient = require('../legal-client');
-const CURDServices = require('../../../dbs/CRUDService');
 const config = require('../config.json');
 
 const _transProto = grpc.load(
@@ -28,45 +27,28 @@ function convertValidationCode(code) {
 }
 
 class SyncServices {
-  constructor (username = 'admin', userorg = 'Org1') {
-    this.client;
-    this.userorg = userorg;
-    this.username = username;
-    this.defaultPeer = {};
-    this.defaultChannel = {};
-    this.peer = {};
-    this.curdservices;
-  }
-  async initialize () {
-    const defaultChannelName = await this.client.getConfigSetting('channelName');
-    const defaultPeerName = await this.client.getConfigSetting('peerName');
-    this.defaultChannel = await this.client.getChannel(defaultChannelName, true);
-    this.defaultPeer = this.defaultChannel.getPeer(defaultPeerName);
-    this.curdservices = new CURDServices();
+  constructor (client, persistence) {
+    this.client = client;
+    this.persistence = persistence;
   }
   async getAllBlocks (channelName) {
-    this.client = await legalClient.getRegisteredUser(this.username, this.userorg, true);
-    await this.getPeers();
-    setInterval(async () => {
-      let channel = this.client.getChannel(channelName, true);
-      await this.getChannels();
-      let height = 0;
-      let peer = channel.getChannelPeers()[0]
-      let channelInfo = await channel.queryInfo(peer);
-      height = channelInfo.height.low;
-      logger.info('blockHeight ----> ', height, '\n');
-      logger.info('queryInfo ----> ', JSON.stringify(channelInfo), '\n');
-      for (let blockNum = 0 ; blockNum < height ; blockNum++) {
-        let block = await channel.queryBlock(
-          blockNum,
-          peer,
-          true
-        )
-        let blockRow = await this.getBlockRow(block);
-        await this.getTransactionRow(block);
-        logger.info('blockInfo ----> ', JSON.stringify(blockRow), '\n');
-      }
-    }, config.blocksSyncTime);
+    let channel = this.client.getChannel(channelName, true);
+    let height = 0;
+    let peer = channel.getChannelPeers()[0]
+    let channelInfo = await channel.queryInfo(peer);
+    height = channelInfo.height.low;
+    logger.info('blockHeight ----> ', height, '\n');
+    logger.info('queryInfo ----> ', JSON.stringify(channelInfo), '\n');
+    for (let blockNum = 0 ; blockNum < height ; blockNum++) {
+      let block = await channel.queryBlock(
+        blockNum,
+        peer,
+        true
+      )
+      let blockRow = await this.getBlockRow(block);
+      await this.getTransactionRow(block);
+      logger.info('blockInfo ----> ', JSON.stringify(blockRow), '\n');
+    }
   }
   async getBlockRow (block) {
     // get the first transaction
@@ -88,7 +70,7 @@ class SyncServices {
       createdt,
       blockhash
     }
-    await this.curdservices.saveBlockRow(block_row);
+    await this.persistence.getCrudService().saveBlockRow(block_row);
     return block_row;
   }
   async getTransactionRow (block) {
@@ -213,22 +195,20 @@ class SyncServices {
         payload_proposal_hash,
         endorser_id_bytes
       };
-      await this.curdservices.saveTransactionRow(transaction_row);
+      await this.persistence.getCrudService().saveTransactionRow(transaction_row);
     }
   }
-  async getChannels () {
-    await this.initialize();
+  async getChannels (defaultPeerName) {
     let channels = await this.client.queryChannels(
-      this.defaultPeer.getName(),
+      defaultPeerName,
       true
     );
     logger.info('channels ----->\n', channels);
   }
-  async getPeers () {
-    await this.initialize();
-    let peers = await this.defaultChannel.getChannelPeers();
+  async getPeers (channel) {
+    let peers = await channel.getChannelPeers();
     peers.forEach(async (item, index) => {
-      let channelInfo = await this.defaultChannel.queryInfo(item);
+      let channelInfo = await channel.queryInfo(item);
       let mspId = await item.getMspid();
       let name = await item.getName();
       let url = await item.getUrl();
@@ -242,7 +222,7 @@ class SyncServices {
         server_hostname: name,
         status: 'RUNNING',
       }
-      await this.curdservices.savePeerRow(peer);
+      await this.persistence.getCrudService().savePeerRow(peer);
     })
   }
 }

@@ -17,16 +17,21 @@ const users = require('./routes/users')
 const api = require('./routes/api')
 
 // fabric-sync
-const SyncServices = require('./platform/fabric/sync/SyncServices');
+const SyncPlatform = require('./platform/fabric/sync/SyncPlatform');
+const Persistence = require('./dbs/Persistence');
 
 /*sync_client.getRegisteredUser('admin', 'Org1', true).then(res => {
   logger.debug('register success %s', JSON.stringify(res));
 }).catch(err => {
   logger.debug('register error %s', err);
 })*/
-let synServices = new SyncServices();
-synServices.getAllBlocks('mychannel');
-
+async function sync () {
+  let persistence = new Persistence();
+  let platform = await SyncPlatform.build(persistence);
+  platform.setPersistenceService();
+  platform.initialize();
+}
+sync();
 // swagger api文档相关
 const port = process.env.port || 3000
 // swagger-ui配置获取文档并部署到ip:prot/docs上
